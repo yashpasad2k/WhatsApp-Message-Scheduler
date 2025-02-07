@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Messenger</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+            <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">WhatsApp Messenger</h1>
+            
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="mb-4 p-4 rounded {% if category == 'error' %}bg-red-100 text-red-700{% else %}bg-green-100 text-green-700{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <!-- Message Form -->
+            <form method="POST" action="{{ url_for('index') }}" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="recipient">
+                        Recipient Number (with country code)
+                    </label>
+                    <input type="text" 
+                           id="recipient" 
+                           name="recipient" 
+                           placeholder="+91XXXXXXXXXX"
+                           class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                           required>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="message">
+                        Message
+                    </label>
+                    <textarea id="message" 
+                            name="message" 
+                            rows="4"
+                            class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                            required></textarea>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="scheduled_date">
+                        Schedule Date (optional)
+                    </label>
+                    <input type="date" 
+                           id="scheduled_date" 
+                           name="scheduled_date"
+                           class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="scheduled_time">
+                        Schedule Time (optional)
+                    </label>
+                    <input type="time" 
+                           id="scheduled_time" 
+                           name="scheduled_time"
+                           class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500">
+                </div>
+                
+                <button type="submit" 
+                        class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline">
+                    Send Message
+                </button>
+            </form>
+            
+            <!-- Setup Instructions -->
+            <div class="mt-6 p-4 bg-yellow-100 rounded">
+                <h2 class="font-bold text-yellow-800 mb-2">Setup Instructions:</h2>
+                <ol class="list-decimal list-inside text-yellow-800">
+                    <li>Send "join" to +14155238886 on WhatsApp</li>
+                    <li>Wait for the confirmation message</li>
+                    <li>Your number is now ready to receive messages</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
